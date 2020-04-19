@@ -128,7 +128,7 @@ def buildTree(file_name):
         
       return tree
 
-tree = buildTree('Shakespear.txt')
+tree = buildTree('Shakespeare.txt')
 print('-------------delete---------------------')
 d= tree.deleteNode('presented') 
 d= tree.preOrder()
