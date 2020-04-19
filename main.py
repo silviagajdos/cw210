@@ -9,7 +9,7 @@ class Node:
         self.right = None
         self.left = None
         
-#METHOD FOR INSERING NODES TO BINARY TREE
+    #METHOD FOR INSERING NODES TO BINARY TREE
     def insertNode(self, data):
         if self.data is None:
             self = Node(data)
@@ -58,6 +58,7 @@ class Node:
     def deleteNode(root, data): 
         if root is None: 
             return root  
+
         #FIND THE DESIRED NODE
         if data < root.data: 
             root.left = Node.deleteNode(root.left, data) 
@@ -74,16 +75,15 @@ class Node:
                 root = None
                 return value 
   
-        # WHEN NODE HAS 2 CHILDREN
+            #WHEN NODE HAS 2 CHILDREN
             value = Node.minimumNodeValue(root.right) 
   
-        # REPLACE IN ORDER SUCCESSOR TO THE NODE 
+            #REPLACE IN ORDER SUCCESSOR TO THE NODE 
             root.data = value.data 
   
-        # DELETE IN ORDER SUCCESSOR
+            #DELETE IN ORDER SUCCESSOR
             root.right = Node.deleteNode(root.right , value.data) 
-  
-  
+		
         return root    
 
 #BUILD TREE FROM TEXT FILE
@@ -91,25 +91,30 @@ def buildTree(file_name):
     tree = None
     list = 0
     result = ""
+
     #WORDS THAT DO NOT COUNT STORE IN THE LIST
     exclusion_list = 'a the'.split()
+
+    #FILE MANIPULATION
     with open(file_name) as string:
       content = string.readlines()
-      for i in range(0,1):
+      #READ ONLY SONNETS FROM REQUIERED LINES
+      for i in range(252,2868):
         result+=((content[i]))
-	#REMOVE DIGITS
+      #REMOVE DIGITS
       stringFinal = re.sub("\d+", "", result)  
       list = stringFinal.split(' ')
-	#ONLY NOT EMPTY LINES
+      #ONLY NOT EMPTY LINES
       list[:] = [x for x in list if x]  
     
-    #COUNTER FOR RETURNING 66MOST COMMON WORDS IN THE LIST FOR BINARY TREE EXCLUDING "A" AND "THE"
+      #COUNTER FOR RETURNING 66MOST COMMON WORDS IN THE LIST FOR BINARY TREE EXCLUDING "A" AND "THE"
       counter = Counter(list)
       for x in exclusion_list:
         if x in counter:
           del counter[x]
       most_common = counter.most_common(66)
       print('66 most common words in Sonnets besides "the" and "a": ', most_common)
+	
       #EXTRACT STRINGS FROM COUNTER TUPLE AND SAVE INTO NEW FILE
       stringsFromTuple, numbers = zip(*most_common)
       with open('graf.txt', 'w') as f:
